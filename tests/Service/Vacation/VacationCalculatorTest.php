@@ -23,16 +23,13 @@ class VacationCalculatorTest extends TestCase
     {
         $calculator = $this->getCalculator();
         $employee   = $this->getEmployee('25 months ago midnight', '3 months ago midnight');
-        
+
         $employee
             // 15 work days, 4 months ago
             ->addVacation((new Vacation())
                 ->setStartDate($start = (new DateTime('4 months ago'))->modify('monday midnight'))
                 ->setEndDate((clone $start)->modify('+3 weeks'))
-            )
-        ;
-
-        $calculator->getAvailableVacationDays($employee);
+            );
 
         self::assertSame(
             15,
@@ -45,7 +42,7 @@ class VacationCalculatorTest extends TestCase
             ->setStartDate($start = (clone $start)->modify('6 months ago')->modify('friday'))
             ->setEndDate((clone $start)->modify('+3 weeks')->modify('+3 days'))
         );
-
+//        dd($calculator->getTotalEarnedVacationDays($employee) .'-'. $calculator->getAvailableVacationDays($employee));
         self::assertSame(
             15 + 16,
             $calculator->getTotalEarnedVacationDays($employee) - $calculator->getAvailableVacationDays($employee),
